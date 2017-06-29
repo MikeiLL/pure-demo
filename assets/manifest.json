@@ -2,7 +2,9 @@
   "dependencies": {
     "main.js": {
       "files": [
-        "scripts/main.js"
+        "scripts/main.js",
+        "scripts/apollo.js",
+        "scripts/vanilla.responsive.menu.js"
       ],
       "main": true
     },
