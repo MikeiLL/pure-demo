@@ -26,5 +26,5 @@ use  Roots\Sage\HeroRender;
       ?>
     </nav>
   </header>
-</div><?php HeroRender\puredemo_get_her(); ?>
+</div><?php if (HeroRender\puredemo_has_hero()) HeroRender\puredemo_get_her(); ?>
 
