@@ -37,46 +37,9 @@
     text-shadow: 1px 1px 1px #272727;
 }
 
-article {
+article p {
   text-align: justify;
 }
-/*
-      .site-title a {
-        margin-top: 1.4rem;
-        font-family: 'IntroHead', monotype;
-        font-size: 4rem;
-        <?php if ( preg_match('/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/', $theme_settings['primary_text_color'])): ?>
-          color: <?= $theme_settings['primary_text_color']; ?>;
-        <?php endif; ?>;
-      }
-
-      h1, h2, h3, h4 {
-        font-family: 'IntroHead', monotype;
-      }
-      .site-description {
-        font-family: 'TypewriterLite', monotype;
-        <?php if ( preg_match('/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/', $theme_settings['primary_text_color'])): ?>
-          color: <?= $theme_settings['primary_text_color']; ?>;
-        <?php endif; ?>;
-      }
-
-      .header {
-        <?php if ( preg_match('/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/', $theme_settings['primary_background_color'])): ?>
-          background-color: <?= $theme_settings['primary_background_color']; ?>;
-        <?php endif; ?>;
-        <?php if ( preg_match('/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/', $theme_settings['primary_text_color'])): ?>
-          color: <?= $theme_settings['primary_text_color']; ?>;
-        <?php endif; ?>;
-      }
-
-      p, span {
-        font-family: Helvetica, Verdana, sans-serif;
-      }
-
-        body {
-    font-family: Georgia;
-    }
-    */
 
 
 /* Globals */
@@ -251,6 +214,66 @@ li.comment {
 	}
 }
 
+
+
+/* Modular Scale */
+$ms-base: 1em;
+$ms-ratio: $minor-third;
+
+/* Typi */
+// See: https://github.com/zellwk/typi
+
+$breakpoints: (
+  small : 35.5em,
+  medium: 60em,
+  large : 100em
+);
+
+@include typi-init;
+
+$typi: (
+      base: (
+      null: (16px, 1.4),
+      small: (18px),
+      large: (20px)
+    ),
+
+    h1-map: (
+      null: (ms(1), 1.2),
+      small: (ms(2), 1.2),
+      medium: (ms(3), 1.2),
+      large: (ms(3), 1.3)
+      ),
+
+    h2-map: (
+      null: (ms(0), 1.2),
+      small: (ms(1), 1.2),
+      medium: (ms(2), 1.2),
+      large: (ms(2), 1.3)
+      ),
+
+    h3-map: (
+      null: (ms(0), 1.2),
+      small: (ms(0), 1.2),
+      medium: (ms(1), 1.2),
+      large: (ms(1), 1.3)
+      ),
+
+    h4-map: (
+      null: (ms(-1), 1.2),
+      small: (ms(-1), 1.2),
+      medium: (ms(0), 1.2),
+      large: (ms(0), 1.3)
+      )
+);
+
+h1 { @include typi(h1-map) }
+h2 { @include typi(h2-map) }
+h3 { @include typi(h3-map) }
+h4 { @include typi(h4-map) }
+
+
+
 @media (min-width: map-get($breakpoints, medium)) {
   .entry-content {
     max-width: 37.5em;
@@ -270,9 +293,6 @@ li.comment {
   @include typi-base();
 }
 
-h1 { @include typi($h1-map) }
-h2 { @include typi($h2-map) }
-h3 { @include typi($h3-map) }
-h4 { @include typi($h4-map) }
 
-//@debug ms-list(-2, 4, $ms-base, $ms-ratio);
+
+@debug ms-list(-2, 4, $ms-base, $ms-ratio);

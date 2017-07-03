@@ -197,10 +197,6 @@ Source: https://gist.github.com/BFTrick/4996955
 /**
  * Check if WooCommerce is active
  **/
-<<<<<<< HEAD
-// Remove from this if using as a plugin
-=======
->>>>>>> 65a890682357c333223e85099f1d44f1e8629aa4
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 
 
@@ -220,7 +216,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
       add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 50 );
       add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
   }
-<<<<<<< HEAD
 
   add_action( 'init', __NAMESPACE__ . '\\pure_demo_woocommerce_modifications' );
 
@@ -280,64 +275,3 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 } /* End if WooCommerce Active */
   /*** End WooCommerce Customization ***/
-=======
-
-  add_action( 'init', __NAMESPACE__ . '\\pure_demo_woocommerce_modifications' );
-
-
-  /**
-   * Show full description in single product page, not excerpt.
-   * Source: http://stackoverflow.com/a/22636114/2223106
-   **/
-  function pure_demo_woocommerce_template_product_description() {
-    wc_get_template( 'single-product/tabs/description.php' );
-  }
-  /* I think we do want tab for description so takes entire width. */
-  //add_action( 'woocommerce_single_product_summary', __NAMESPACE__ . '\\pure_demo_woocommerce_template_product_description', 60 );
-
-  /**
-   * Change the heading title on the "Product Description" tab section for single products.
-   * Source: https://isabelcastillo.com/change-product-description-title-woocommerce
-   */
-  function pure_demo_product_description_heading() {
-      return 'More About This Project';
-  }
-
-  add_filter( 'woocommerce_product_description_tab_title', __NAMESPACE__ . '\\pure_demo_product_description_heading' );
-
-  function pure_demo_woo_remove_product_tabs( $tabs ) {
-
-    //unset( $tabs['description'] );        // Remove the description tab
-    unset( $tabs['reviews'] );            // Remove the reviews tab
-    unset( $tabs['additional_information'] );      // Remove the additional information tab
-
-    return $tabs;
-
-  }
-  add_filter( 'woocommerce_product_tabs', __NAMESPACE__. '\\pure_demo_woo_remove_product_tabs', 98 );
-
-  /**
-   * Change the Shop archive page title.
-   * @param  string $title
-   * @return string
-   *
-   * Source: https://nicola.blog/2016/03/29/change-shop-page-title/
-   */
-  function wc_pure_demo_archive_title( $title ) {
-      if ( is_shop() && isset( $title['title'] ) ) {
-          $title['title'] = 'Discography';
-      }
-
-      return $title;
-  }
-  add_filter( 'document_title_parts', __NAMESPACE__. '\\wc_pure_demo_archive_title' );
-
-  /* Remove woocommerce title page and product summaries
-   * Source: https://roots.io/using-woocommerce-with-sage/
-   */
-  add_filter( 'woocommerce_show_page_title', '__return_false' );
-  remove_action('woocommerce_single_product_summary', __NAMESPACE__ . '\\woocommerce_template_single_title', 5);
-
-}
-/*** End WooCommerce Customization ***/
->>>>>>> 65a890682357c333223e85099f1d44f1e8629aa4

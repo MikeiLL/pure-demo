@@ -11,6 +11,7 @@ namespace Roots\Sage\HeroRender;
 
 		// Get the post ID
 		global $post;
+
 		$post_id = $post_id ? $post_id : $post->ID;
 
 		// Get hero
@@ -37,12 +38,13 @@ namespace Roots\Sage\HeroRender;
 	// Determine if a post has a hero
 	function puredemo_has_hero( $post_id = null ) {
 
-		// Return false on blog posts
-		if ( is_home() || is_single() ) return false;
+		// Return false on blog posts and 404 pages
+		if ( is_home() || is_single() || is_404() ) return false;
 
 		// Get the post ID
 		global $post;
-		$post_id = $post_id ? $post_id : $post->ID;
+
+		if ( $post_id = null ) return false;
 
 		// Get hero content
 		$hero = puredemo_get_hero_content( $post_id );
@@ -62,8 +64,6 @@ namespace Roots\Sage\HeroRender;
 
 		// Get hero
 		$hero = puredemo_get_hero_content( $post_id );
-
-		$page_header = get_post_meta( $post->ID, 'puredemo_page_header', true );
 
 		// If no hero, bail
 		if ( empty( $hero['content'] ) && empty( $hero['image'] ) && empty( $hero['img'] ) ) return;
@@ -124,8 +124,6 @@ namespace Roots\Sage\HeroRender;
 
 		// Get hero
 		$hero = puredemo_get_hero_content( $post_id );
-
-		$page_header = get_post_meta( $post->ID, 'puredemo_page_header', true );
 
 		// If product page or no hero, bail
 		if ( get_post_type($post_id) == 'product' || empty( $hero['content'] ) && empty( $hero['image'] ) && empty( $hero['img'] ) ) return;
