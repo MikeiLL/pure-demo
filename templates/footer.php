@@ -1,7 +1,7 @@
 <footer class="content-info">
-  <div class="container">
-    <?php dynamic_sidebar('sidebar-footer'); ?>
-  </div>
+  <?php if ( is_active_sidebar( 'sidebar-footer' ) ) : ?>
+      <?php dynamic_sidebar( 'sidebar-footer' ); ?>
+  <?php endif; ?>
   <div id="colophon" class="site-footer" role="contentinfo">
   <?php
     if ( has_nav_menu( 'footer_links' ) ) :
@@ -10,6 +10,6 @@
   ?>
   </div>
 
-	
+
 </footer>
 

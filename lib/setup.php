@@ -3,6 +3,7 @@
 namespace Roots\Sage\Setup;
 
 use Roots\Sage\Assets;
+use Roots\Sage\Extras;
 
 /**
  * Theme setup
@@ -66,9 +67,10 @@ function widgets_init() {
   ]);
 
   register_sidebar([
-    'name'          => __('Footer', 'pure-demo'),
+    'name'          => __('Footer Widget Area', 'pure-demo'),
     'id'            => 'sidebar-footer',
-    'before_widget' => '<section class="widget %1$s %2$s">',
+    'class'            => 'pure-g',
+    'before_widget'  => '<section class="widget %2$s '. Extras\pure_demo_count_widgets( 'sidebar-footer' ) .'">',
     'after_widget'  => '</section>',
     'before_title'  => '<h3>',
     'after_title'   => '</h3>'

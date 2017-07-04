@@ -165,6 +165,28 @@ endif;
 remove_filter('get_the_excerpt', 'wp_trim_excerpt');
 add_filter('get_the_excerpt', __NAMESPACE__ . '\\wpse_custom_wp_trim_excerpt');
 
+  /**
+   * Count number of widgets in a sidebar
+   * Used to add classes to widget areas so widgets can be displayed one, two, three or four per row
+   * Source: https://generatewp.com/snippet/2V0V0gy/
+   */
+    function pure_demo_count_widgets( $sidebar_id ) {
+      // If loading from front page, consult $_wp_sidebars_widgets rather than options
+      // to see if wp_convert_widget_settings() has made manipulations in memory.
+      global $_wp_sidebars_widgets;
+      if ( empty( $_wp_sidebars_widgets ) ) :
+        $_wp_sidebars_widgets = get_option( 'sidebars_widgets', array() );
+      endif;
+
+      $sidebars_widgets_count = $_wp_sidebars_widgets;
+
+      if ( isset( $sidebars_widgets_count[ $sidebar_id ] ) ) :
+        $widget_count = count( $sidebars_widgets_count[ $sidebar_id ] );
+        $widget_classes = 'pure-u-1-' . count( $sidebars_widgets_count[ $sidebar_id ] );
+        return $widget_classes;
+      endif;
+    }
+
 /*** Begin WooCommerce Customization ***/
 
 /*
