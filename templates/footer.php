@@ -1,7 +1,9 @@
-<footer class="content-info pure-g">
+<footer class="content-info">
+  <div class="pure-g">
   <?php if ( is_active_sidebar( 'sidebar-footer' ) ) : ?>
       <?php dynamic_sidebar( 'sidebar-footer' ); ?>
   <?php endif; ?>
+  </div>
   <div id="colophon" class="site-footer" role="contentinfo">
   <?php
     if ( has_nav_menu( 'footer_links' ) ) :

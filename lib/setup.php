@@ -69,7 +69,6 @@ function widgets_init() {
   register_sidebar([
     'name'          => __('Footer Widget Area', 'pure-demo'),
     'id'            => 'sidebar-footer',
-    'class'            => 'pure-g',
     'before_widget'  => '<section class="widget %2$s '. Extras\pure_demo_count_widgets( 'sidebar-footer' ) .'">',
     'after_widget'  => '</section>',
     'before_title'  => '<h3>',
