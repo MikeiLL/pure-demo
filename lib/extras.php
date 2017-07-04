@@ -182,7 +182,10 @@ add_filter('get_the_excerpt', __NAMESPACE__ . '\\wpse_custom_wp_trim_excerpt');
 
       if ( isset( $sidebars_widgets_count[ $sidebar_id ] ) ) :
         $widget_count = count( $sidebars_widgets_count[ $sidebar_id ] );
-        $widget_classes = 'pure-u-1-' . count( $sidebars_widgets_count[ $sidebar_id ] );
+        $widget_classes = '';
+        $widget_classes .= 'pure-u-1 pure-u-sm-1-1';
+        $widget_classes .= ' pure-u-md-1-' . ceil($widget_count / 2);
+        $widget_classes .= ' pure-u-lg-1-' . $widget_count;
         return $widget_classes;
       endif;
     }

@@ -1,4 +1,4 @@
-<footer class="content-info">
+<footer class="content-info pure-g">
   <?php if ( is_active_sidebar( 'sidebar-footer' ) ) : ?>
       <?php dynamic_sidebar( 'sidebar-footer' ); ?>
   <?php endif; ?>
@@ -9,7 +9,5 @@
     endif;
   ?>
   </div>
-
-
 </footer>
 
