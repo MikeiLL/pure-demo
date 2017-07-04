@@ -58,7 +58,7 @@ endif;
 	) );
 
 		$wp_customize->add_section( 'text_section', array(
-		'title'       => __( 'Custom CSS & JS', 'pure-demo' ),
+		'title'       => __( 'Custom JS', 'pure-demo' ),
 		'priority'    => 0,
 		'description' => __( 'This is the section description', 'pure-demo' ),
 	) );
@@ -114,30 +114,6 @@ function kirki_file_controls_fields( $fields ) {
 }
 add_filter( 'kirki/fields', 'kirki_file_controls_fields' );
 
-/**
- * Add text fields
- */
-function puredemo_css_controls( $fields ) {
-
-	$fields[] = array(
-		'type'        => 'code',
-		'settings'    => 'puredemo_custom_css',
-		'label'       => __( 'Code-HTML-Chrome', 'pure-demo' ),
-		'description' => __( 'Add custom CSS styling for the site here.', 'pure-demo' ),
-		'help'        => __( 'Example of CSS styling would be: `.header {color: white;}`.', 'pure-demo' ),
-		'default'     => '',
-		'section'     => 'text_section',
-		'choices'     => array(
-			'theme'    => 'chrome',
-			'language' => 'html',
-			'height'   => 250,
-		)
-	);
-
-	return $fields;
-
-}
-add_filter( 'kirki/fields', 'puredemo_css_controls' );
 
 /**
  * Add text fields
@@ -901,15 +877,6 @@ function kirki_hooks_init() {
 		'capability'    => 'edit_theme_options',
 		'option_type'   => 'option',
 		'option_name'   => 'my_kirki_repeater',
-	) );
-
-	Puredemo_Kirki::add_section( 'my_kirki_repeater_section', array(
-		'title'          => __( 'Kirki Repeater' ),
-		'description'    => __( 'Add custom CSS here' ),
-		'panel'          => '', // Not typically needed.
-		'priority'       => 1,
-		'capability'     => 'edit_theme_options',
-		'theme_supports' => '', // Rarely needed.
 	) );
 }
 
