@@ -232,8 +232,8 @@ $breakpoints: (
 
 $typi: (
       base: (
-      null: (16px, 1.4),
-      small: (18px),
+      null: (14px, 1.4),
+      small: (16px),
       large: (20px)
     ),
 
@@ -266,6 +266,11 @@ $typi: (
       )
 );
 
+// TODO really address this.
+P {
+  line-height: 1.1em !important;
+}
+
 h1 { @include typi(h1-map) }
 h2 { @include typi(h2-map) }
 h3 { @include typi(h3-map) }
@@ -273,6 +278,7 @@ h4 { @include typi(h4-map) }
 p { @include typi(base) }
 
 
+/* Media Queries */
 
 @media (min-width: map-get($breakpoints, medium)) {
   .entry-content {
