@@ -375,7 +375,7 @@ Puredemo_Kirki::add_field( 'pure-demo', array(
 	'priority'    => 10,
 	'output'      => array(
 		array(
-			'element'  => '#header .menu-item:hover',
+			'element'  => '#header .menu-item a:hover',
 			'property' => 'background-color',
 		),
 	),

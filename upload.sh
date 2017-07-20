@@ -9,7 +9,7 @@ elif [[ $1 == --my ]] ; then
 elif [[ $1 == --mh ]] ; then
 		rsync -avP dist lib woocommerce screenshot.png templates *.php *.css madhappy:public_html/LIVE/wp-content/themes/pure-madness
 elif [[ $1 == --daddy ]] ; then
-		rsync -avP dist lib woocommerce screenshot.png templates *.php *.css mfld:public_html/LIVE/wp-content/themes/pure-life
+		rsync -avP dist lib woocommerce screenshot.png templates *.php *.css mfld:public_html/wp/wp-content/themes/pure-life
 elif [[ $1 == --ville ]] ; then
 		rsync -avP dist lib woocommerce screenshot.png templates *.php *.css brnsville:public_html/wp/wp-content/themes/pure-ville
 elif [[ $1 == --all ]] ; then
