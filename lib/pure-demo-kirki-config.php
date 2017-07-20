@@ -350,14 +350,15 @@ Puredemo_Kirki::add_field( 'pure-demo', array(
 	'priority'    => 10,
 	'output'      => array(
 		array(
-			'element'  => '#header .menu-item',
+			'element'  => '#header .navigation_container',
 			'property' => 'background-color',
+      'media_query' => '@media screen and (min-width: 600px)',
 		),
 	),
 	'transport'   => 'postMessage',
 	'js_vars'     => array(
 		array(
-			'element'  => '#header .menu-item',
+			'element'  => '#header .navigation_container',
 			'function' => 'css',
 			'property' => 'background-color',
 		),
@@ -375,7 +376,8 @@ Puredemo_Kirki::add_field( 'pure-demo', array(
 	'priority'    => 10,
 	'output'      => array(
 		array(
-			'element'  => '#header .menu-item a:hover, footer.content-info .menu-item a:hover',
+			'element'  => '#header .menu-item a:hover, footer.content-info .menu-item a:hover,
+			                footer.content-info .menu-item a:visited',
 			'property' => 'background-color',
 		),
 	),

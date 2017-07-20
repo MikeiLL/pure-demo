@@ -28,10 +28,9 @@
   min-height: 40px;
   display: inline-block;
   margin: 0 auto;
+  width: 100%;
 
   ul {
-    width: 100%;
-    //max-width: 960px;
     margin: 0 auto;
     padding: 0;
     list-style: none;
@@ -222,6 +221,8 @@
 
 .navigation_container {
   position: relative;
+    display: flex;
+    justify-content: center;
   z-index: 1; }
 .navigation_container li ul {
   @media (min-width: 600px) {
