@@ -375,7 +375,7 @@ Puredemo_Kirki::add_field( 'pure-demo', array(
 	'priority'    => 10,
 	'output'      => array(
 		array(
-			'element'  => '#header .menu-item a:hover',
+			'element'  => '#header .menu-item a:hover, footer.content-info .menu-item a:hover',
 			'property' => 'background-color',
 		),
 	),
@@ -400,14 +400,14 @@ Puredemo_Kirki::add_field( 'pure-demo', array(
 	'priority'    => 10,
 	'output'      => array(
 		array(
-			'element'  => '#header .menu-item a',
+			'element'  => '#header .menu-item a, footer.content-info .menu-item a',
 			'property' => 'color',
 		),
 	),
 	'transport'   => 'postMessage',
 	'js_vars'     => array(
 		array(
-			'element'  => '#header .menu-item a',
+			'element'  => '#header .menu-item a, footer.content-info .menu-item a',
 			'function' => 'css',
 			'property' => 'color',
 		),
@@ -425,14 +425,14 @@ Puredemo_Kirki::add_field( 'pure-demo', array(
 	'priority'    => 10,
 	'output'      => array(
 		array(
-			'element'  => '#header .sub-menu .menu-item',
+			'element'  => '#header .sub-menu .menu-item, footer.content-info .sub-menu .menu-item',
 			'property' => 'background-color',
 		),
 	),
 	'transport'   => 'postMessage',
 	'js_vars'     => array(
 		array(
-			'element'  => '#header .sub-menu .menu-item',
+			'element'  => '#header .sub-menu .menu-item, footer.content-info .sub-menu .menu-item',
 			'function' => 'css',
 			'property' => 'background-color',
 		),
