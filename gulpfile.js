@@ -8,6 +8,7 @@ var flatten      = require('gulp-flatten');
 var gulp         = require('gulp');
 var gulpif       = require('gulp-if');
 var imagemin     = require('gulp-imagemin');
+var rename       = require('gulp-rename');
 var jshint       = require('gulp-jshint');
 var lazypipe     = require('lazypipe');
 var less         = require('gulp-less');
@@ -19,6 +20,11 @@ var runSequence  = require('run-sequence');
 var sass         = require('gulp-sass');
 var sourcemaps   = require('gulp-sourcemaps');
 var uglify       = require('gulp-uglify');
+var minifycss    = require('gulp-clean-css');
+var notify = require('gulp-notify');
+var livereload   = require('gulp-livereload');
+var lr = require('tiny-lr');
+var server       = lr();
 
 // See https://github.com/austinpray/asset-builder
 var manifest = require('asset-builder')('./assets/manifest.json');
@@ -142,6 +148,19 @@ var jsTasks = function(filename) {
     })();
 };
 
+// Critical
+gulp.task('critical', function() {
+  return gulp.src('assets/styles/critical.scss')
+    .pipe(sass({ style: 'expanded', }))
+    .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
+    .pipe(gulp.dest('dist/styles'))
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(minifycss())
+    .pipe(livereload(server))
+    .pipe(gulp.dest('dist/styles'))
+    .pipe(notify({ message: 'Critical styles task complete' }));
+});
+
 // ### Write to rev manifest
 // If there are any revved files then write them to the rev manifest.
 // See https://github.com/sindresorhus/gulp-rev
@@ -249,6 +268,7 @@ gulp.task('watch', function() {
     }
   });
   gulp.watch([path.source + 'styles/**/*'], ['styles']);
+  gulp.watch([path.source + 'styles/**/*'], ['critical']);
   gulp.watch([path.source + 'scripts/**/*'], ['jshint', 'scripts']);
   gulp.watch([path.source + 'fonts/**/*'], ['fonts']);
   gulp.watch([path.source + 'images/**/*'], ['images']);
@@ -261,6 +281,7 @@ gulp.task('watch', function() {
 gulp.task('build', function(callback) {
   runSequence('styles',
               'scripts',
+              'critical',
               ['fonts', 'images'],
               callback);
 });
