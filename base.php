@@ -57,7 +57,8 @@ use Roots\Sage\Wrapper;
     ?>
     <script type="text/javascript">
         responsivemenu.init({
-            wrapper: document.querySelector('.navigation_container')
+            wrapper: document.querySelector('.navigation_container'),
+            togglecontent: '&#9776;'
         });
     </script>
     <?php
