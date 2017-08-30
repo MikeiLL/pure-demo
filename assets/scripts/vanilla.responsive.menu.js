@@ -15,6 +15,7 @@
 
 console.log('this happened');
 /* jshint ignore:start */
+
 (function (root, factory) {
     if ( typeof define === 'function' && define.amd ) {
         define('responsivemenu', factory(root));
@@ -204,12 +205,7 @@ console.log('this happened');
     // Responsive menu
     function initialize(settings) {
 
-        // Define what the actual menu object is
-        if ( settings.menu == '' ) {
-            menu = settings.wrapper.getElementsByTagName('ul')[0];
-        } else {
-            menu = settings.menu;
-        }
+        menu = settings.wrapper.getElementsByTagName('ul')[0] || settings.menu;
 
         // Add a class when JS is initiated
         apollo.addClass(settings.wrapper, settings.initiated_class);
@@ -241,7 +237,7 @@ console.log('this happened');
         apollo.addClass(toggle_element, [settings.toggleclass, settings.hideclass]);
         if ( settings.before_element == '' ) { settings.before_element = settings.wrapper.firstChild }
         settings.before_element.parentNode.insertBefore(toggle_element, settings.before_element);
-        var togglebutton = document.getElementsByClassName(settings.toggleclass)[0];
+        var togglebutton = settings.wrapper.getElementsByClassName(settings.toggleclass)[0];
         togglebutton.innerHTML = settings.togglecontent;
         togglebutton.setAttribute('aria-hidden', 'true');
         togglebutton.setAttribute('aria-pressed', 'false');
@@ -264,6 +260,8 @@ console.log('this happened');
 
         // Adding classes
         function classes() {
+
+            menu = settings.wrapper.getElementsByTagName('ul')[0] || settings.menu;
 
             mobileindicatorZindex = getStyle(settings.mobileindicatorid, "z-index");
 
@@ -322,6 +320,8 @@ console.log('this happened');
         // Sticky menu body height
         function stickyMenu() {
 
+            menu = settings.wrapper.getElementsByTagName('ul')[0] || settings.menu;
+
             if ( settings.sticky == 1 ) {
 
                 // The current menu and viewport heights
@@ -373,7 +373,7 @@ console.log('this happened');
             classes();
             stickyMenu();
 
-            // Run again after 150 ms for safari OSX when scrollbars are visible and you're resizing to a smaller window
+            // Run again after 200 ms for safari OSX when scrollbars are visible and you're resizing to a smaller window
             waitForFinalEvent(function(){
                 classes();
                 stickyMenu();
@@ -411,6 +411,8 @@ console.log('this happened');
         // Clicking the toggle button
         togglebutton.onclick = function() {
 
+            menu = settings.wrapper.getElementsByTagName('ul')[0] || settings.menu;
+
             // Show the menu
             if ( apollo.hasClass(menu, settings.hideclass) ) {
 
@@ -442,6 +444,8 @@ console.log('this happened');
 
             // Hide the menu
             else if ( apollo.hasClass(menu, settings.openclass) ) {
+
+                menu = settings.wrapper.getElementsByTagName('ul')[0] || settings.menu;
 
                 // Function to run before toggling
                 settings.onBeforeToggleClose();
@@ -479,6 +483,9 @@ console.log('this happened');
 
         // Clicking the sub toggles button
         if ( hasChildren ) {
+
+            menu = settings.wrapper.getElementsByTagName('ul')[0] || settings.menu;
+
             forEach(subtoggles, function(value, prop) {
 
                 // Variables
@@ -568,3 +575,4 @@ console.log('this happened');
 
 });
 /* jshint ignore:end */
+

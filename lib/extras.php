@@ -299,4 +299,198 @@ if ( class_exists( 'WooCommerce' ) ) {
   remove_action('woocommerce_single_product_summary', __NAMESPACE__ . '\\woocommerce_template_single_title', 5);
 
 } /* End if WooCommerce Active */
-  /*** End WooCommerce Customization ***/
+/*** End WooCommerce Customization ***/
+
+/*** Start Our Navwalker */
+//source: https://corpocrat.com/2015/08/28/how-to-integrate-purecss-navigation-menu-into-wordpress/
+// Add custom class to li of wp_navi_menu()
+add_filter('nav_menu_css_class' , __NAMESPACE__ . '\\special_nav_class' , 10 , 2);
+
+function special_nav_class($classes, $item){
+
+     $classes[] = "pure-menu-item";
+
+     return $classes;
+}
+
+// Add class to a href
+function add_menuclass($ulclass) {
+ return preg_replace('/<a /', '<a class="pure-menu-link" ', $ulclass);
+ }
+add_filter('wp_nav_menu', __NAMESPACE__ . '\\add_menuclass');
+
+// LI Submenu parent class
+
+add_filter( 'wp_nav_menu_objects', __NAMESPACE__ . '\\add_menu_parent_class' );
+function add_menu_parent_class( $items ) {
+
+    $parents = array();
+    foreach ( $items as $item ) {
+        if ( $item->menu_item_parent && $item->menu_item_parent > 0 ) {
+            $parents[] = $item->menu_item_parent;
+        }
+    }
+
+    foreach ( $items as $item ) {
+        if ( in_array( $item->ID, $parents ) ) {
+            $item->classes[] = 'pure-menu-item pure-menu-has-children pure-menu-allow-hover';
+        }
+    }
+
+    return $items;
+}
+
+
+
+// Add class to ul submenu
+
+class th_walker_nav_menu extends \Walker_Nav_Menu {
+
+  // add classes to ul sub-menus
+  function start_lvl( &$output, $depth = 0, $args = array() ) {
+      // depth dependent classes
+      $indent = ( $depth > 0  ? str_repeat( "\t", $depth ) : '' ); // code indent
+      $display_depth = ( $depth + 1); // because it counts the first submenu as 0
+      $classes = array(
+          'sub-menu pure-menu-children',
+          ( $display_depth % 2  ? 'menu-odd' : 'menu-even' ),
+          ( $display_depth >=2 ? 'sub-sub-menu' : '' ),
+          'menu-depth-' . $display_depth
+          );
+      $class_names = implode( ' ', $classes );
+
+      // build html
+      $output .= "\n" . $indent . '<ul class="' . $class_names . '">' . "\n";
+  }
+
+}
+
+//Source https://gist.github.com/moabi/22da47a56bcab30fb530696eddae70e9
+/**
+ * Will add classes to create a pure.css dropdown menu
+ * Usage
+ * wp_nav_menu(array(
+ * 'theme_location'    => 'primary',
+ * 'menu_class'        => 'pure-menu-list',
+ * 'container_class'   => 'pure-menu pure-menu-horizontal',
+ * 'walker'            => new pure_walker_nav_menu
+ * ));
+ *
+ */
+class pure_walker_nav_menu extends \Walker_Nav_Menu {
+
+    public $break_point = null;
+    public $displayed = 0;
+
+	function start_lvl( &$output, $depth = 0, $args = array() ) {
+		$indent = str_repeat( "\t", $depth );
+// Select a CSS class for this `<ul>` based on $depth
+		switch ( $depth ) {
+			case 0:
+				// Top-level submenus get the 'nav-main-sub-list' class
+				$class = 'pure-menu-children';
+				break;
+			case 1:
+				$class = 'pure-menu-children';
+				break;
+			case 2:
+				$class = 'pure-menu-children';
+				break;
+			case 3:
+				// Submenus nested 1-3 levels deep get the 'nav-other-sub-list' class
+				$class = 'pure-menu-children';
+				break;
+			default:
+				// All other submenu `<ul>`s receive no class
+				break;
+		}
+		// Only print out the 'class' attribute if a class has been assigned
+		if ( isset( $class ) ) {
+			$output .= "\n$indent<ul class=\"$class\">\n";
+		} else {
+			$output .= "\n$indent<ul>\n";
+		}
+	}
+	function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+		$indent     = str_repeat( "\t", $depth );
+		$attributes = '';
+		! empty ( $item->attr_title )
+		// Avoid redundant titles
+		and $item->attr_title !== $item->title
+		    and $attributes .= ' title="' . esc_attr( $item->attr_title ) . '"';
+		! empty ( $item->url )
+		and $attributes .= ' href="' . esc_attr( $item->url ) . '"';
+    $theme_locations = get_nav_menu_locations();
+
+    if( !isset( $this->break_point ) ) {
+        $menu_elements = wp_get_nav_menu_items( $args->menu );
+        $top_level_elements = 0;
+
+        foreach( $menu_elements as $el ) {
+            if( $el->menu_item_parent === '0' ) {
+                $top_level_elements++;
+            }
+        }
+        $this->break_point = ceil( $top_level_elements / 2 ) + 1;
+     }
+    $menu_item_count = $primary_navigation_menu->count;
+    if($item->menu_item_parent == '0')
+      $output .= '<div class="pure-u-1 pure-u-md-1-'.$top_level_elements.'">';
+		$attributes  = trim( $attributes );
+		$title       = apply_filters( 'the_title', $item->title, $item->ID );
+		$item_output = "$args->before<a class='pure-menu-link' $attributes>$args->link_before$title</a>"
+		               . "$args->link_after$args->after";
+		$active_class = ($item->current) ? ' current-menu-item' : '';
+		$item_ancestor = ($item->current_item_ancestor) ? ' current-menu-ancestor current_page_ancestor' : '';
+		$item_parent = ($item->current_item_parent) ? ' current_page_parent current-menu-parent' : '';
+		$item_has_children = ((is_array($item->classes) && in_array('menu-item-has-children',$item->classes))) ? ' pure-menu-has-children pure-menu-allow-hover' : '';
+		$item_class = 'pure-menu-item'.$item_has_children.$active_class.$item_ancestor.$item_parent;
+		// Select a CSS class for this `<li>` based on $depth
+		switch ( $depth ) {
+			case 0:
+				// Top-level `<li>`s get the 'nav-main-item' class
+				$class = $item_class;
+				break;
+			case 1:
+				// Top-level `<li>`s get the 'nav-main-item' class
+				$class = $item_class;
+				break;
+			case 2:
+				// Top-level `<li>`s get the 'nav-main-item' class
+				$class = $item_class;
+				break;
+			default:
+				$class = $item_class;
+				break;
+		}
+		// Only print out the 'class' attribute if a class has been assigned
+		if ( isset( $class ) ) {
+			$output .= $indent . '<li class="' . $class . '">';
+		} else {
+			$output .= $indent . '<li>';
+		}
+		$output .= apply_filters(
+			'walker_nav_menu_start_el',
+			$item_output,
+			$item,
+			$depth,
+			$args
+		);
+	}
+
+		public function end_lvl( &$output, $depth = 0, $args = array() ) {
+		if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
+			$t = '';
+			$n = '';
+		} else {
+			$t = "\t";
+			$n = "\n";
+		}
+		$indent = str_repeat( $t, $depth );
+		if($depth == '0')
+		  $output .= '</div>';
+		$output .= "$indent</ul>{$n}";
+	}
+}
+// Walker_Nav_Menu
+
