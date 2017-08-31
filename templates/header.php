@@ -23,124 +23,7 @@ use  Roots\Sage\Extras;
       <!--<![endif]-->
       <style>
 
-      .site-header {
-          position: relative;
-      }
 
-      .custom-wrapper {
-          margin-bottom: 1em;
-          -webkit-font-smoothing: antialiased;
-          height: 2.1em;
-          overflow: hidden;
-          -webkit-transition: height 0.5s;
-          -moz-transition: height 0.5s;
-          -ms-transition: height 0.5s;
-          transition: height 0.5s;
-      }
-
-      .custom-wrapper.open {
-          height: 14em;
-      }
-
-      .custom-wrapper {
-          height: 0;
-      }
-
-      .custom-toggle {
-          width: 34px;
-          height: 34px;
-          position: absolute;
-          top: 0;
-          right: 0;
-          display: none;
-      }
-
-      .custom-toggle {
-          display: block;
-      }
-
-      .custom-toggle .bar {
-          background-color: #777;
-          display: block;
-          width: 20px;
-          height: 2px;
-          border-radius: 100px;
-          position: absolute;
-          top: 18px;
-          right: 7px;
-          -webkit-transition: all 0.5s;
-          -moz-transition: all 0.5s;
-          -ms-transition: all 0.5s;
-          transition: all 0.5s;
-      }
-
-      .custom-toggle .bar:first-child {
-          -webkit-transform: translateY(-6px);
-          -moz-transform: translateY(-6px);
-          -ms-transform: translateY(-6px);
-          transform: translateY(-6px);
-      }
-
-      .custom-toggle .bar:last-child {
-          -webkit-transform: translateY(+6px);
-          -moz-transform: translateY(+6px);
-          -ms-transform: translateY(+6px);
-          transform: translateY(+6px);
-      }
-
-      .custom-toggle.x .bar:last-child {
-          display: none;
-      }
-
-      .custom-toggle.x .bar {
-          -webkit-transform: rotate(45deg);
-          -moz-transform: rotate(45deg);
-          -ms-transform: rotate(45deg);
-          transform: rotate(45deg);
-      }
-
-      .custom-toggle.x .bar:first-child {
-          -webkit-transform: rotate(-45deg);
-          -moz-transform: rotate(-45deg);
-          -ms-transform: rotate(-45deg);
-          transform: rotate(-45deg);
-      }
-
-      .pure-menu-has-children {
-        position: relative;
-      }
-
-      .pure-menu-children {
-          display: none;
-          position: absolute;
-          left: 45%;
-          top: 2em;
-          margin: 0;
-          padding: 0;
-      }
-
-      @media (min-width: 47.999em) {
-        .custom-toggle {
-            display: none;
-        }
-
-        .custom-wrapper {
-          height: 3.2em;
-          overflow: visible;
-        }
-
-        .pure-menu-children {
-          display: none;
-          left: 100%;
-          top: 0;
-          margin: 0;
-          padding: 0;
-      }
-
-        .pure-menu-children .pure-menu-item {
-          background-color: magenta;
-        }
-      }
       </style>
 
       <!--<div class="custom-wrapper pure-g" id="menu">
@@ -162,7 +45,7 @@ use  Roots\Sage\Extras;
 
 
     <a href="#" class="custom-toggle" id="toggle"><s class="bar"></s><s class="bar"></s><s class="bar"></s></a>
-    <nav class="custom-wrapper pure-menu custom-restricted-width pure-u-1" id="menu">
+    <nav class="custom-wrapper navigation-container pure-menu custom-restricted-width pure-u-1" id="menu">
     <?php
     if ( has_nav_menu( 'primary_navigation' ) ) :
     wp_nav_menu(array('theme_location' =>'primary_navigation',
