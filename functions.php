@@ -32,7 +32,3 @@ foreach ($sage_includes as $file) {
 }
 unset($file, $filepath);
 
-
-class pure_walker_nav_menu extends Walker_Nav_Menu {
-
-}
