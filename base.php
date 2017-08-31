@@ -14,23 +14,11 @@ use Roots\Sage\Wrapper;
         <?php _e('You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.', 'pure-demo'); ?>
       </div>
     <![endif]-->
-    <!-- next line recommended for vanilla javascript menu -->
-    <script type="text/javascript">function hasClass(e,t){return e.className.match(new RegExp("(\\s|^)"+t+"(\\s|$)"))}var el=document.body;var cl="no-js";if(hasClass(el,cl)){var reg=new RegExp("(\\s|^)"+cl+"(\\s|$)");el.className=el.className.replace(reg," js-enabled")}</script>
 
     <!--[if lte IE 8]>
       <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
     <![endif]-->
-    <!--[if lt IE 9]>
-    <style>
-    /* #### - css for IE8 and under - also copy the css for the desktop menu here for IE7/8 compatibility #### */
 
-    /* copy and paste desktop menu css here */
-
-    #menu .toggle-sub { display:none } /* hide arrows (no rotate in IE7/8) */
-    #menu ul ul .toggle-sub { display:inline-block } /* reinstate right arrows on subs */
-    #menu ul li a { padding-right:1.5em } /* remove extra space previously reserved for down arrows */
-    </style>
-    <![endif]-->
     <?php
       do_action('get_header');
       get_template_part('templates/header');
