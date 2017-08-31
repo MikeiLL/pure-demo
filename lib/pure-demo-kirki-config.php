@@ -405,6 +405,10 @@ Puredemo_Kirki::add_field( 'pure-demo', array(
 			'element'  => '#header .menu-item a, footer.content-info .menu-item a',
 			'property' => 'color',
 		),
+		array(
+			'element'  => '.custom-toggle .bar',
+			'property' => 'background-color',
+		),
 	),
 	'transport'   => 'postMessage',
 	'js_vars'     => array(
@@ -412,6 +416,11 @@ Puredemo_Kirki::add_field( 'pure-demo', array(
 			'element'  => '#header .menu-item a, footer.content-info .menu-item a',
 			'function' => 'css',
 			'property' => 'color',
+		),
+		array(
+			'element'  => '.custom-toggle .bar',
+			'function' => 'css',
+			'property' => 'background-color',
 		),
 	)
 ) );
