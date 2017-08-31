@@ -45,7 +45,7 @@ use  Roots\Sage\Extras;
 
 
     <a href="#" class="custom-toggle" id="toggle"><s class="bar"></s><s class="bar"></s><s class="bar"></s></a>
-    <nav class="custom-wrapper navigation-container pure-menu custom-restricted-width pure-u-1" id="menu">
+    <nav class="custom-wrapper overflow-hide navigation-container pure-menu custom-restricted-width pure-u-1" id="menu">
     <?php
     if ( has_nav_menu( 'primary_navigation' ) ) :
     wp_nav_menu(array('theme_location' =>'primary_navigation',
@@ -62,8 +62,11 @@ use  Roots\Sage\Extras;
           WINDOW_CHANGE_EVENT = ('onorientationchange' in window) ? 'orientationchange':'resize';
 
       function toggleHorizontal() {
+          var menu = document.getElementById('menu');
+          menu.classList.toggle('overflow-hide');
+          menu.classList.toggle('overflow-visible');
           [].forEach.call(
-              document.getElementById('menu').querySelectorAll('.custom-can-transform'),
+              menu.querySelectorAll('.custom-can-transform'),
               function(el){
                   el.classList.toggle('pure-menu-horizontal');
               }

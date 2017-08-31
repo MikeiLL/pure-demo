@@ -6,11 +6,18 @@
     margin-bottom: 1em;
     -webkit-font-smoothing: antialiased;
     height: 2.1em;
-    overflow: hidden;
     -webkit-transition: height 0.5s;
     -moz-transition: height 0.5s;
     -ms-transition: height 0.5s;
     transition: height 0.5s;
+}
+
+.overflow-hide {
+    overflow: hidden;
+}
+
+.overflow-visible {
+    overflow: visible;
 }
 
 .custom-wrapper.open {
@@ -94,16 +101,19 @@
 }
 
 @media (min-width: 47.999em) {
-  .custom-toggle {
-      display: none;
-  }
+    .custom-toggle {
+        display: none;
+    }
 
-  .custom-wrapper {
-    height: 3.2em;
-    overflow: visible;
-  }
+    .custom-wrapper {
+        height: 3.2em;
+    }
 
-  .pure-menu-children .pure-menu-item {
-    background-color: magenta;
-  }
+    .overflow-hide {
+        overflow: visible;
+    }
+
+    .pure-menu-children .pure-menu-item {
+        background-color: magenta;
+    }
 }
