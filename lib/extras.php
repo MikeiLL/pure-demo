@@ -302,69 +302,6 @@ if ( class_exists( 'WooCommerce' ) ) {
 /*** End WooCommerce Customization ***/
 
 /*** Start Our Navwalker */
-//source: https://corpocrat.com/2015/08/28/how-to-integrate-purecss-navigation-menu-into-wordpress/
-// Add custom class to li of wp_navi_menu()
-add_filter('nav_menu_css_class' , __NAMESPACE__ . '\\special_nav_class' , 10 , 2);
-
-function special_nav_class($classes, $item){
-
-     $classes[] = "pure-menu-item";
-
-     return $classes;
-}
-
-// Add class to a href
-function add_menuclass($ulclass) {
- return preg_replace('/<a /', '<a class="pure-menu-link" ', $ulclass);
- }
-add_filter('wp_nav_menu', __NAMESPACE__ . '\\add_menuclass');
-
-// LI Submenu parent class
-
-add_filter( 'wp_nav_menu_objects', __NAMESPACE__ . '\\add_menu_parent_class' );
-function add_menu_parent_class( $items ) {
-
-    $parents = array();
-    foreach ( $items as $item ) {
-        if ( $item->menu_item_parent && $item->menu_item_parent > 0 ) {
-            $parents[] = $item->menu_item_parent;
-        }
-    }
-
-    foreach ( $items as $item ) {
-        if ( in_array( $item->ID, $parents ) ) {
-            $item->classes[] = 'pure-menu-item pure-menu-has-children pure-menu-allow-hover';
-        }
-    }
-
-    return $items;
-}
-
-
-
-// Add class to ul submenu
-
-class th_walker_nav_menu extends \Walker_Nav_Menu {
-
-  // add classes to ul sub-menus
-  function start_lvl( &$output, $depth = 0, $args = array() ) {
-      // depth dependent classes
-      $indent = ( $depth > 0  ? str_repeat( "\t", $depth ) : '' ); // code indent
-      $display_depth = ( $depth + 1); // because it counts the first submenu as 0
-      $classes = array(
-          'sub-menu pure-menu-children',
-          ( $display_depth % 2  ? 'menu-odd' : 'menu-even' ),
-          ( $display_depth >=2 ? 'sub-sub-menu' : '' ),
-          'menu-depth-' . $display_depth
-          );
-      $class_names = implode( ' ', $classes );
-
-      // build html
-      $output .= "\n" . $indent . '<ul class="' . $class_names . '">' . "\n";
-  }
-
-}
-
 //Source https://gist.github.com/moabi/22da47a56bcab30fb530696eddae70e9
 /**
  * Will add classes to create a pure.css dropdown menu
@@ -388,17 +325,17 @@ class pure_walker_nav_menu extends \Walker_Nav_Menu {
 		switch ( $depth ) {
 			case 0:
 				// Top-level submenus get the 'nav-main-sub-list' class
-				$class = 'pure-menu-children';
+				$class = 'pure-menu-children sub-menu';
 				break;
 			case 1:
-				$class = 'pure-menu-children';
+				$class = 'pure-menu-children sub-menu';
 				break;
 			case 2:
-				$class = 'pure-menu-children';
+				$class = 'pure-menu-children sub-menu';
 				break;
 			case 3:
 				// Submenus nested 1-3 levels deep get the 'nav-other-sub-list' class
-				$class = 'pure-menu-children';
+				$class = 'pure-menu-children sub-menu';
 				break;
 			default:
 				// All other submenu `<ul>`s receive no class
@@ -428,7 +365,7 @@ class pure_walker_nav_menu extends \Walker_Nav_Menu {
 		$item_ancestor = ($item->current_item_ancestor) ? ' current-menu-ancestor current_page_ancestor' : '';
 		$item_parent = ($item->current_item_parent) ? ' current_page_parent current-menu-parent' : '';
 		$item_has_children = ((is_array($item->classes) && in_array('menu-item-has-children',$item->classes))) ? ' pure-menu-has-children pure-menu-allow-hover' : '';
-		$item_class = 'pure-menu-item'.$item_has_children.$active_class.$item_ancestor.$item_parent;
+		$item_class = 'pure-menu-item menu-item'.$item_has_children.$active_class.$item_ancestor.$item_parent;
 		// Select a CSS class for this `<li>` based on $depth
 		switch ( $depth ) {
 			case 0:
