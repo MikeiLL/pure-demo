@@ -3,8 +3,8 @@ use  Roots\Sage\HeroRender;
 use  Roots\Sage\Extras;
 ?>
 <div id="header" class="header pure-u-1" >
-  <header id="masthead" class="site-header" role="banner">
-    <div id="branding" class="site-branding">
+  <header id="masthead" class="site-header pure-g" role="banner">
+    <div id="branding" class="site-branding pure-u-1">
     <?php $logo_image = Puredemo_Kirki::get_option( 'pure-demo', 'header_logo_setting' );
     if ( $logo_image ) : ?>
         <a class="navmenu-brand" href='<?php echo esc_url( home_url( '/' ) ); ?>' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'>
@@ -21,10 +21,13 @@ use  Roots\Sage\Extras;
       <!--[if gt IE 8]><!-->
           <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
       <!--<![endif]-->
-
       <style>
+
+      .site-header {
+          position: relative;
+      }
+
       .custom-wrapper {
-          background-color: #ffd390;
           margin-bottom: 1em;
           -webkit-font-smoothing: antialiased;
           height: 2.1em;
@@ -39,17 +42,21 @@ use  Roots\Sage\Extras;
           height: 14em;
       }
 
-      .custom-menu-3 {
-          text-align: right;
+      .custom-wrapper {
+          height: 0;
       }
 
       .custom-toggle {
           width: 34px;
           height: 34px;
           position: absolute;
-          top: 10;
+          top: 0;
           right: 0;
           display: none;
+      }
+
+      .custom-toggle {
+          display: block;
       }
 
       .custom-toggle .bar {
@@ -81,6 +88,10 @@ use  Roots\Sage\Extras;
           transform: translateY(+6px);
       }
 
+      .custom-toggle.x .bar:last-child {
+          display: none;
+      }
+
       .custom-toggle.x .bar {
           -webkit-transform: rotate(45deg);
           -moz-transform: rotate(45deg);
@@ -95,47 +106,63 @@ use  Roots\Sage\Extras;
           transform: rotate(-45deg);
       }
 
-      @media (max-width: 47.999em) {
+      .pure-menu-has-children {
+        position: relative;
+      }
 
-          .custom-menu-3 {
-              text-align: left;
-          }
+      .pure-menu-children {
+          display: none;
+          position: absolute;
+          left: 45%;
+          top: 2em;
+          margin: 0;
+          padding: 0;
+      }
 
-          .custom-toggle {
-              display: block;
-          }
+      @media (min-width: 47.999em) {
+        .custom-toggle {
+            display: none;
+        }
 
+        .custom-wrapper {
+          height: 3.2em;
+          overflow: visible;
+        }
+
+        .pure-menu-children {
+          display: none;
+          left: 100%;
+          top: 0;
+          margin: 0;
+          padding: 0;
+      }
+
+        .pure-menu-children .pure-menu-item {
+          background-color: magenta;
+        }
       }
       </style>
 
-      <div class="custom-wrapper pure-g" id="menu">
-          <div class="pure-u-1 pure-u-md-1-3">
-              <div class="pure-menu">
+      <!--<div class="custom-wrapper pure-g" id="menu">
+              <div class="pure-menu pure-u-1 pure-u-md-1-2">
                   <a href="#" class="pure-menu-heading custom-brand">Brand</a>
                   <a href="#" class="custom-toggle" id="toggle"><s class="bar"></s><s class="bar"></s></a>
               </div>
-          </div>
-          <div class="pure-u-1 pure-u-md-1-3">
-              <div class="pure-menu pure-menu-horizontal custom-can-transform">
+              <div class=" pure-u-1 pure-u-md-1-2 pure-menu pure-menu-horizontal custom-can-transform">
                   <ul class="pure-menu-list">
                       <li class="pure-menu-item"><a href="#" class="pure-menu-link">Home</a></li>
                       <li class="pure-menu-item"><a href="#" class="pure-menu-link">About</a></li>
                       <li class="pure-menu-item"><a href="#" class="pure-menu-link">Contact</a></li>
-                  </ul>
-              </div>
-          </div>
-          <div class="pure-u-1 pure-u-md-1-3">
-              <div class="pure-menu pure-menu-horizontal custom-menu-3 custom-can-transform">
-                  <ul class="pure-menu-list">
+
                       <li class="pure-menu-item"><a href="#" class="pure-menu-link">Yahoo</a></li>
                       <li class="pure-menu-item"><a href="#" class="pure-menu-link">W3C</a></li>
                   </ul>
               </div>
-          </div>
-      </div>
+      </div>-->
 
-    <nav class="custom-wrapper pure-g pure-menu" id="menu2">
+
     <a href="#" class="custom-toggle" id="toggle"><s class="bar"></s><s class="bar"></s><s class="bar"></s></a>
+    <nav class="custom-wrapper pure-menu custom-restricted-width pure-u-1" id="menu">
     <?php
     if ( has_nav_menu( 'primary_navigation' ) ) :
     wp_nav_menu(array('theme_location' =>'primary_navigation',

@@ -420,22 +420,6 @@ class pure_walker_nav_menu extends \Walker_Nav_Menu {
 		    and $attributes .= ' title="' . esc_attr( $item->attr_title ) . '"';
 		! empty ( $item->url )
 		and $attributes .= ' href="' . esc_attr( $item->url ) . '"';
-    $theme_locations = get_nav_menu_locations();
-
-    if( !isset( $this->break_point ) ) {
-        $menu_elements = wp_get_nav_menu_items( $args->menu );
-        $top_level_elements = 0;
-
-        foreach( $menu_elements as $el ) {
-            if( $el->menu_item_parent === '0' ) {
-                $top_level_elements++;
-            }
-        }
-        $this->break_point = ceil( $top_level_elements / 2 ) + 1;
-     }
-    $menu_item_count = $primary_navigation_menu->count;
-    if($item->menu_item_parent == '0')
-      $output .= '<div class="pure-u-1 pure-u-md-1-'.$top_level_elements.'">';
 		$attributes  = trim( $attributes );
 		$title       = apply_filters( 'the_title', $item->title, $item->ID );
 		$item_output = "$args->before<a class='pure-menu-link' $attributes>$args->link_before$title</a>"
@@ -478,19 +462,6 @@ class pure_walker_nav_menu extends \Walker_Nav_Menu {
 		);
 	}
 
-		public function end_lvl( &$output, $depth = 0, $args = array() ) {
-		if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
-			$t = '';
-			$n = '';
-		} else {
-			$t = "\t";
-			$n = "\n";
-		}
-		$indent = str_repeat( $t, $depth );
-		if($depth == '0')
-		  $output .= '</div>';
-		$output .= "$indent</ul>{$n}";
-	}
 }
 // Walker_Nav_Menu
 
