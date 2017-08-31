@@ -55,12 +55,7 @@ use Roots\Sage\Wrapper;
       get_template_part('templates/footer');
       wp_footer();
     ?>
-    <script type="text/javascript">
-        responsivemenu.init({
-            wrapper: document.querySelector('.navigation_container'),
-            togglecontent: '&#9776;'
-        });
-    </script>
+
     <?php
     $value = Kirki::get_option( 'puredemo', 'puredemo_custom_js' );
     echo '<script type="text/javascript">';
