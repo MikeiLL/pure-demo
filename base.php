@@ -56,6 +56,8 @@ use Roots\Sage\Wrapper;
       wp_footer();
     ?>
 
+    <?php $js_File = file_get_contents(get_stylesheet_directory() . '/dist/scripts/critical.js'); ?>
+    <script type="text/javascript"><?php echo $js_File; ?></script>
     <?php
     $value = Kirki::get_option( 'puredemo', 'puredemo_custom_js' );
     echo '<script type="text/javascript">';
