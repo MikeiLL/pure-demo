@@ -2,9 +2,7 @@
   "dependencies": {
     "main.js": {
       "files": [
-        "scripts/main.js",
-        "scripts/apollo.js",
-        "scripts/vanilla.responsive.menu.js"
+        "scripts/main.js"
       ],
       "main": true
     },
@@ -17,6 +15,11 @@
     "customizer.js": {
       "files": [
         "scripts/customizer.js"
+      ]
+    },
+    "critical.js": {
+      "files": [
+        "scripts/critical.js"
       ]
     },
     "jquery.js": {
