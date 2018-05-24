@@ -8,23 +8,18 @@ var flatten      = require('gulp-flatten');
 var gulp         = require('gulp');
 var gulpif       = require('gulp-if');
 var imagemin     = require('gulp-imagemin');
-var rename       = require('gulp-rename');
 var jshint       = require('gulp-jshint');
 var lazypipe     = require('lazypipe');
 var less         = require('gulp-less');
 var merge        = require('merge-stream');
 var cssNano      = require('gulp-cssnano');
 var plumber      = require('gulp-plumber');
+var rename       = require('gulp-rename');
 var rev          = require('gulp-rev');
 var runSequence  = require('run-sequence');
 var sass         = require('gulp-sass');
 var sourcemaps   = require('gulp-sourcemaps');
 var uglify       = require('gulp-uglify');
-var minifycss    = require('gulp-clean-css');
-var notify = require('gulp-notify');
-var livereload   = require('gulp-livereload');
-var lr = require('tiny-lr');
-var server       = lr();
 
 // See https://github.com/austinpray/asset-builder
 var manifest = require('asset-builder')('./assets/manifest.json');
@@ -73,6 +68,12 @@ var enabled = {
 // Path to the compiled assets manifest in the dist directory
 var revManifest = path.dist + 'assets.json';
 
+// Error checking; produce an error rather than crashing.
+var onError = function(err) {
+  console.log(err.toString());
+  this.emit('end');
+};
+
 // ## Reusable Pipelines
 // See https://github.com/OverZealous/lazypipe
 
@@ -90,6 +91,9 @@ var cssTasks = function(filename) {
     })
     .pipe(function() {
       return gulpif(enabled.maps, sourcemaps.init());
+    })
+    .pipe(function() {
+      return gulpif('*.less', less());
     })
     .pipe(function() {
       return gulpif('*.scss', sass({
@@ -112,6 +116,55 @@ var cssTasks = function(filename) {
     })
     .pipe(function() {
       return gulpif(enabled.rev, rev());
+    })
+    .pipe(function() {
+      return gulpif(enabled.maps, sourcemaps.write('.', {
+        sourceRoot: 'assets/styles/'
+      }));
+    })();
+};
+
+// ## Reusable Pipelines for Critical
+// See https://github.com/OverZealous/lazypipe
+
+// We don't need revisioning for Critical CSS
+// so this is like the above but without revisioning.
+//
+// Example
+// ```
+// gulp.src(cssFiles)
+//   .pipe(cssTasks('main.css')
+//   .pipe(gulp.dest(path.dist + 'styles'))
+// ```
+var criticalCssTasks = function(filename) {
+  return lazypipe()
+    .pipe(function() {
+      return gulpif(!enabled.failStyleTask, plumber());
+    })
+    .pipe(function() {
+      return gulpif(enabled.maps, sourcemaps.init());
+    })
+    .pipe(function() {
+      return gulpif('*.less', less());
+    })
+    .pipe(function() {
+      return gulpif('*.scss', sass({
+        outputStyle: 'nested', // libsass doesn't support expanded yet
+        precision: 10,
+        includePaths: ['.'],
+        errLogToConsole: !enabled.failStyleTask
+      }));
+    })
+    .pipe(concat, filename)
+    .pipe(autoprefixer, {
+      browsers: [
+        'last 2 versions',
+        'android 4',
+        'opera 12'
+      ]
+    })
+    .pipe(cssNano, {
+      safe: true
     })
     .pipe(function() {
       return gulpif(enabled.maps, sourcemaps.write('.', {
@@ -148,19 +201,6 @@ var jsTasks = function(filename) {
     })();
 };
 
-// Critical
-gulp.task('critical', function() {
-  return gulp.src('assets/styles/critical.scss')
-    .pipe(sass({ style: 'expanded', }))
-    .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
-    .pipe(gulp.dest('dist/styles'))
-    .pipe(rename({ suffix: '.min' }))
-    .pipe(minifycss())
-    .pipe(livereload(server))
-    .pipe(gulp.dest('dist/styles'))
-    .pipe(notify({ message: 'Critical styles task complete' }));
-});
-
 // ### Write to rev manifest
 // If there are any revved files then write them to the rev manifest.
 // See https://github.com/sindresorhus/gulp-rev
@@ -193,10 +233,18 @@ gulp.task('styles', ['wiredep'], function() {
       });
     }
     merged.add(gulp.src(dep.globs, {base: 'styles'})
+      .pipe(plumber({errorHandler: onError}))
       .pipe(cssTasksInstance));
   });
   return merged
     .pipe(writeToManifest('styles'));
+});
+
+// Critical
+gulp.task('critical', function() {
+  return gulp.src('assets/styles/critical.scss')
+      .pipe(criticalCssTasks('critical.min.css'))
+      .pipe(gulp.dest(path.dist + 'styles'));
 });
 
 // ### Scripts
@@ -207,6 +255,7 @@ gulp.task('scripts', ['jshint'], function() {
   manifest.forEachDependency('js', function(dep) {
     merged.add(
       gulp.src(dep.globs, {base: 'scripts'})
+        .pipe(plumber({errorHandler: onError}))
         .pipe(jsTasks(dep.name))
     );
   });
@@ -228,11 +277,14 @@ gulp.task('fonts', function() {
 // `gulp images` - Run lossless compression on all the images.
 gulp.task('images', function() {
   return gulp.src(globs.images)
-    .pipe(imagemin({
-      progressive: true,
-      interlaced: true,
-      svgoPlugins: [{removeUnknownsAndDefaults: false}, {cleanupIDs: false}]
-    }))
+    .pipe(imagemin([
+      imagemin.jpegtran({progressive: true}),
+      imagemin.gifsicle({interlaced: true}),
+      imagemin.svgo({plugins: [
+        {removeUnknownsAndDefaults: false},
+        {cleanupIDs: false}
+      ]})
+    ]))
     .pipe(gulp.dest(path.dist + 'images'))
     .pipe(browserSync.stream());
 });
@@ -268,7 +320,7 @@ gulp.task('watch', function() {
     }
   });
   gulp.watch([path.source + 'styles/**/*'], ['styles']);
-  gulp.watch([path.source + 'styles/**/*'], ['critical']);
+  gulp.watch([path.source + 'styles/critical.scss'], ['critical']);
   gulp.watch([path.source + 'scripts/**/*'], ['jshint', 'scripts']);
   gulp.watch([path.source + 'fonts/**/*'], ['fonts']);
   gulp.watch([path.source + 'images/**/*'], ['images']);
@@ -280,8 +332,8 @@ gulp.task('watch', function() {
 // Generally you should be running `gulp` instead of `gulp build`.
 gulp.task('build', function(callback) {
   runSequence('styles',
-              'scripts',
               'critical',
+              'scripts',
               ['fonts', 'images'],
               callback);
 });
