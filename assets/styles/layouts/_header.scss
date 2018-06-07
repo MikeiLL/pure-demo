@@ -39,4 +39,8 @@
 }
 
 /* Branding */
-#branding .navmenu-brand img { max-width: 60%; }
+#branding .navmenu-brand img {
+  width: 60%;
+  max-width: 500px;
+  height: auto;
+}

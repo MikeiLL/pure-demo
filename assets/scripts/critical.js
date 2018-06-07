@@ -11,8 +11,8 @@
 		  function(el){
 			  el.classList.toggle('pure-menu-horizontal');
 		  }
-	  )
-  };
+	  );
+  }
 
   function toggleMenu() {
 	  // set timeout so that the panel has a chance to roll up
