@@ -1,13 +1,8 @@
-@import "../../bower_components/modular-scale/stylesheets/_modular-scale.scss";
+
+@import 'purecss';
+
 @import "common/variables";
 
-// Automatically injected Bower dependencies via wiredep (never manually edit this block)
-// bower:scss
-@import "../../bower_components/font-awesome/scss/font-awesome.scss";
-@import "../../bower_components/sass-pura/assets/_pure.scss";
-@import "../../bower_components/typi/scss/_typi.scss";
-@import "../../bower_components/modular-scale/stylesheets/_modular-scale.scss";
-// endbower
 
 @import "common/mixins";
 @import "common/global";

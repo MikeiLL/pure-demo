@@ -1,15 +1,12 @@
 {
-  "name": "sage",
-  "version": "8.5.4",
-  "author": "Ben Word <ben@benword.com>",
-  "homepage": "https://roots.io/sage/",
+  "name": "pure-demo",
+  "version": "2.0",
+  "author": "Mike iLL <mike@mzoo.org>",
+  "homepage": "https://mzoo.org",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/roots/sage.git"
-  },
+  "repository": "git://github.com/MikeiLL/pure-demo.git",
   "bugs": {
-    "url": "https://github.com/roots/sage/issues"
+    "url": "https://github.com/MikeiLL/pure-demo/issues"
   },
   "licenses": [
     {
@@ -37,8 +34,17 @@
     "gulp-sass": "^4.1.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-uglify": "^3.0.2",
+    "gulp-wait": "^0.0.2",
+    "modularscale-sass": "^3.0.10",
     "postcss": "^8.2.0",
     "remove": "^0.1.5"
   },
-  "dependencies": {}
+  "dependencies": {
+    "font-awesome": "^4.6.3",
+    "jquery": "^3.1.1",
+    "purecss-sass": "^2.0.3",
+    "typi": "^3.1.0"
+  },
+  "description": "Purecss and modular scale wp theme.",
+  "license": "MIT"
 }
