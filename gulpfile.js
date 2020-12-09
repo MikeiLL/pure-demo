@@ -11,7 +11,6 @@ const gulp = require("gulp"),
       cssnano = require("cssnano"),
       sourcemaps = require('gulp-sourcemaps'),
       notify = require('gulp-notify'),
-      path = require('path'),
       wait = require('gulp-wait');
       del = require("del");
 
@@ -36,7 +35,6 @@ function styles() {
         .pipe(sourcemaps.init())
         .pipe(wait(200))
         .pipe(sass({
-                    //includePaths: path.join(__dirname, 'node_modules/bootstrap/scss/bootstrap')
                     includePaths: ['./node_modules/purecss-sass/vendor/assets/stylesheets/',
                                   './node_modules/modularscale-sass/stylesheets/',
                                   './node_modules/typi/scss/'
@@ -72,7 +70,7 @@ function scripts() {
 exports.scripts = scripts;
 
 function clean(cb) {
-  del(["dist"]);
+  del(["dist/styles/*", "dist/scripts/*"]);
   cb();
 }
 
