@@ -13,29 +13,6 @@ const gulp = require("gulp"),
     notify = require('gulp-notify'),
     del = require("del");
 
-
-
-// var argv         = require('minimist')(process.argv.slice(2));
-// var autoprefixer = require('gulp-autoprefixer');
-// var browserSync  = require('browser-sync').create();
-// var changed      = require('gulp-changed');
-// var concat       = require('gulp-concat');
-// var flatten      = require('gulp-flatten');
-// var gulpif       = require('gulp-if');
-// var imagemin     = require('gulp-imagemin');
-// var jshint       = require('gulp-jshint');
-// var lazypipe     = require('lazypipe');
-// var less         = require('gulp-less');
-// var merge        = require('merge-stream');
-// var cssNano      = require('gulp-cssnano');
-// var plumber      = require('gulp-plumber');
-// var rename       = require('gulp-rename');
-// var rev          = require('gulp-rev');
-// var runSequence  = require('run-sequence');
-// var sourcemaps   = require('gulp-sourcemaps');
-// var uglify       = require('gulp-uglify');
-
-
 const paths = {
     styles: {
         // By using styles/**/*.sass we're telling gulp to check all folders for any sass file
