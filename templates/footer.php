@@ -1,3 +1,5 @@
+<?php use Roots\Sage\Extras as Extras; ?>
+
 <footer class="content-info">
   <div class="pure-g">
   <?php if ( is_active_sidebar( 'sidebar-footer' ) ) : ?>
@@ -11,5 +13,7 @@
     endif;
   ?>
   </div>
+  <?php echo Extras\wpb_copyright(); ?>
+  <?php bloginfo( 'name' ); ?>
 </footer>
 
