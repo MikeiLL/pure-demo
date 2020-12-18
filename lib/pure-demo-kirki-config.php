@@ -513,14 +513,14 @@ Puredemo_Kirki::add_field( 'pure-demo', array(
 	'priority'    => 10,
 	'output'      => array(
 		array(
-			'element'  => 'h1, h2, 3, h4, h5, h6',
+			'element'  => 'h1, h2, h3, h4, h5, h6',
 			'property' => 'color',
 		),
 	),
 	'transport'   => 'postMessage',
 	'js_vars'     => array(
 		array(
-			'element'  => 'h1, h2, 3, h4, h5, h6',
+			'element'  => 'h1, h2, h3, h4, h5, h6',
 			'function' => 'css',
 			'property' => 'color',
 		),

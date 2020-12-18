@@ -3,7 +3,7 @@ use  Roots\Sage\HeroRender;
 use  Roots\Sage\Extras;
 ?>
 <div id="header" class="header pure-u-1" >
-  <header id="masthead" class="site-header pure-g" role="banner">
+  <header id="masthead" class="site-header pure-g">
     <div id="branding" class="site-branding pure-u-1">
     <?php $logo_image = Puredemo_Kirki::get_option( 'pure-demo', 'header_logo_setting' );
     if ( $logo_image ) : ?>
@@ -12,8 +12,8 @@ use  Roots\Sage\Extras;
         </a>
     <?php else : ?>
       <h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a></h1>
-    <?php endif; ?>
       <h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
+    <?php endif; ?>
     </div>
     <!--[if lte IE 8]>
           <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-old-ie-min.css">
