@@ -36,7 +36,7 @@
     "gulp-uglify": "^3.0.2",
     "gulp-wait": "^0.0.2",
     "modularscale-sass": "^3.0.10",
-    "postcss": "^8.2.0",
+    "postcss": "^8.2.10",
     "remove": "^0.1.5"
   },
   "dependencies": {
